@@ -118,7 +118,7 @@ Deff<-function(weight,dose,model,P,LB,UB,grid=.01,N_dose=FALSE)
       print(Dopt)
       cat(format("D-efficiency", width=50),"\n")
       print(eff)
-	cat(format("%More Sameples Needed", width=50),"\n")
+	cat(format("%More Samples Needed", width=50),"\n")
 	print(size)
 }
 

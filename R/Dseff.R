@@ -18,9 +18,9 @@ Dseff<-function(weight,dose,P,LB,UB,r=30,epsilon=.001,grid=.01, N_dose=FALSE)
 
 #Setting parameter values
       P[3]<-ifelse(change==0,log(P[3]),log(-P[3]))
-      T<-P	
+      T<-P
 
-#Initial design points with weights	
+#Initial design points with weights
 	X<-c(LB,LB+(UB-LB)/4,LB+2*(UB-LB)/4,LB+3*(UB-LB)/4,UB)
 	wX<-length(X)
 	W<-rep(1/wX,wX-1)
@@ -36,7 +36,7 @@ Dseff<-function(weight,dose,P,LB,UB,r=30,epsilon=.001,grid=.01, N_dose=FALSE)
             ds<-rep(0,length(x))
             inv1<-Inv(M4,I4)
             inv<-Inv(M5,I5)
-            for (i in 1:length(x)) 
+            for (i in 1:length(x))
                  ds[i]<-ds11(T,x[i],inv,inv1,5)
             newX<-x[which.max(ds)]
             newds<-max(ds)
@@ -63,7 +63,7 @@ Dseff<-function(weight,dose,P,LB,UB,r=30,epsilon=.001,grid=.01, N_dose=FALSE)
             M5<-upinfor(W,T,X,5)
             inv1<-Inv(M4,I4)
             inv<-Inv(M5,I5)
-            for (i in 1:length(x)) 
+            for (i in 1:length(x))
                   ds[i]<-ds11(T,x[i],inv,inv1,5)
             newX<-x[which.max(ds)]
             newds<-max(ds)
@@ -80,25 +80,25 @@ Dseff<-function(weight,dose,P,LB,UB,r=30,epsilon=.001,grid=.01, N_dose=FALSE)
 	if (change==0) Dose<-round(exp(D[1,]),2) else Dose<--round(exp(D[1,]),2)
 	Weight<-round(D[2,],3)
 
-#Ds-optimal design    
+#Ds-optimal design
 	Dsopt<-rbind(Dose,Weight)
 
 #Design given
       k<-length(dose)
       for (i in 1:k)
             if(dose[i]==0) dose[i]<-.0001
-      if(change==1) dose<--dose      
+      if(change==1) dose<--dose
       dose<-log(dose)
 
 	eff<-(det(upinfor(weight,T,dose,5))/det(upinfor(weight,T,dose,4)))/(det(upinfor(Dsweight,T,Dspoints,5))/det(upinfor(Dsweight,T,Dspoints,4)))
-	size<-100*(1/eff-1) 
+	size<-100*(1/eff-1)
 	eff<-round(eff,2)
-	size<-round(size,2)     
+	size<-round(size,2)
 	cat(format("Ds-optimal design", width=50),"\n")
       print(Dsopt)
       cat(format("Ds-efficiency", width=50),"\n")
       print(eff)
-	cat(format("%More Sameples Needed", width=50),"\n")
+	cat(format("%More Samples Needed", width=50),"\n")
 	print(size)
 }
 
